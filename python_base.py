@@ -7,9 +7,12 @@
     help(obj.func)      # 查询obj.func的具体介绍和用法
     
 #-- 测试类型的三种方法，推荐第三种
-    if type(L) == type([]): print("L is list")
-    if type(L) == list: print("L is list")
-    if isinstance(L, list): print("L is list")
+    if type(L) == type([]):
+        print("L is list")
+    if type(L) == list:
+        print("L is list")
+    if isinstance(L, list):
+        print("L is list")
         
 #-- Python数据类型：哈希类型、不可哈希类型
     # 哈希类型，即在原地不能改变的变量类型，不可变类型。可利用hash函数查看其hash值，也可以作为字典的key
@@ -72,7 +75,7 @@
 #-- 集合set
     """
     set是一个无序不重复元素集, 基本功能包括关系测试和消除重复元素。
-    set支持union(联合), intersection(交), difference(差)和sysmmetric difference(对称差集)等数学运算。
+    set支持union(联合), intersection(交), difference(差)和symmetric difference(对称差集)等数学运算。
     set支持x in set, len(set), for x in set。
     set不记录元素位置或者插入点, 因此不支持indexing, slicing, 或其它类序列的操作
     """
@@ -83,15 +86,19 @@
     c = t – s;    t.difference(s)                # 求差集（项在t中, 但不在s中）
     d = t ^ s;    t.symmetric_difference(s)      # 对称差集（项在t或s中, 但不会同时出现在二者中）
     t.add('x');   t.remove('H')                  # 增加/删除一个item
-    t.update([10,37,42])                         # 利用[......]更新s集合
+    s.update([10,37,42])                         # 利用[......]更新s集合
     x in s,  x not in s                          # 集合中是否存在某个值
-    s.issubset(t); s.issuperset(t); s.copy(); s.discard(x); s.clear()
+    s.issubset(t);      s <= t                   # 测试是否 s 中的每一个元素都在 t 中
+    s.issuperset(t);    s >= t                   # 测试是否 t 中的每一个元素都在 s 中 
+    s.copy(); 
+    s.discard(x);                                # 删除s中x
+    s.clear()                                    # 清空s
     {x**2 for x in [1, 2, 3, 4]}                 # 集合解析，结果：{16, 1, 4, 9}
     {x for x in 'spam'}                          # 集合解析，结果：{'a', 'p', 's', 'm'}
     
 #-- 集合frozenset，不可变对象
     """
-    set是可变对象，即不存在hash值，不能作为字典的键值。同样的还有list、tuple等
+    set是可变对象，即不存在hash值，不能作为字典的键值。同样的还有list等(tuple是可以作为字典key的)
     frozenset是不可变对象，即存在hash值，可作为字典的键值
     frozenset对象没有add、remove等方法，但有union/intersection/difference等方法
     """
@@ -102,7 +109,7 @@
 
 #-- 布尔类型bool
     type(True)                   # 返回<class 'bool'>
-    isinstance(False, int)       # bool类型属于整形，所以返回True
+    isinstance(False, int)       # bool类型属于整型，所以返回True
     True == 1; True is 1         # 输出(True, False)
     
 #-- 动态类型简介
@@ -129,7 +136,7 @@
     S = u'spam'                             # Python2.6中的Unicode字符串
     s1+s2, s1*3, s[i], s[i:j], len(s)       # 字符串操作
     'a %s parrot' % 'kind'                  # 字符串格式化表达式
-    'a {0} parrot'.format('kind')           # 字符串格式化方法
+    'a {1} {0} parrot'.format('kind', 'red')# 字符串格式化方法
     for x in s: print(x)                    # 字符串迭代，成员关系
     [x*2 for x in s]                        # 字符串列表解析
     ','.join(['a', 'b', 'c'])               # 字符串输出，结果：a,b,c
@@ -146,10 +153,15 @@
     str1.count('t')                         # 查找字符串出现的次数
     #上面所有方法都可用index代替，不同的是使用index查找不到会抛异常，而find返回-1
     str1.replace('old','new')               # 替换函数，替换old为new，参数中可以指定maxReplaceTimes，即替换指定次数的old为new
-    str1.strip(); str1.lstrip(); str1.rstrip(); str1.strip('d'); str1.lstrip('d'); str1.rstrip('d')
+    str1.strip();                           # 默认删除空白符
+    str1.strip('d');                        # 删除str1字符串中开头、结尾处，位于 d 删除序列的字符
+    str1.lstrip();
+    str1.lstrip('d');                       # 删除str1字符串中开头处，位于 d 删除序列的字符
+    str1.rstrip();
+    str1.rstrip('d')                        # 删除str1字符串中结尾处，位于 d 删除序列的字符
     str1.startswith('start')                # 是否以start开头
     str1.endswith('end')                    # 是否以end结尾
-    str1.isalnum(); str1.isalpha(); str1.isdigit(); str1.islower(); str1.isupper()      # 判断字符串是否全为字符、数字、大写、小写
+    str1.isalnum(); str1.isalpha(); str1.isdigit(); str1.islower(); str1.isupper()      # 判断字符串是否全为字符、数字、小写、大写
 
 #-- 三重引号编写多行字符串块，并且在代码折行处嵌入换行字符\n
     mantra = """hello world
@@ -159,14 +171,14 @@
     
 #-- 索引和分片：
     S[0], S[len(S)–1], S[-1]                # 索引
-    S[1:3], S[1:], S[:-1], S[1:10:2]        # 分片，第三个参数指定步长
+    S[1:3], S[1:], S[:-1], S[1:10:2]        # 分片，第三个参数指定步长，如`S[1:10:2]`是从1位到10位没隔2位获取一个字符。
 
 #-- 字符串转换工具：
     int('42'), str(42)                      # 返回(42, '42')
     float('4.13'), str(4.13)                # 返回(4.13, '4.13')
     ord('s'), chr(115)                      # 返回(115, 's')
     int('1001', 2)                          # 将字符串作为二进制数字，转化为数字，返回9
-    bin(13), oct(13), hex(13)               # 将整数转化为二进制/八进制/十六进制字符串，返回('1001', '0o15', '0xd')
+    bin(13), oct(13), hex(13)               # 将整数转化为二进制/八进制/十六进制字符串，返回('0b1101', '015', '0xd')
     
 #-- 另类字符串连接
     name = "wang" "hong"                    # 单行，name = "wanghong"
@@ -246,7 +258,7 @@
 #-- 常用字典常量和操作
     D = {}
     D = {'spam':2, 'tol':{'ham':1}}                   # 嵌套字典
-    D = dict.fromkeys(['s', 'd'], 8)                  # {'d': 8, 's': 8}
+    D = dict.fromkeys(['s', 'd'], 8)                  # {'s': 8, 'd': 8}
     D = dict(name = 'tom', age = 12)                  # {'age': 12, 'name': 'tom'}
     D = dict([('name', 'tom'), ('age', 12)])          # {'age': 12, 'name': 'tom'}
     D = dict(zip(['name', 'age'], ['tom', 12]))       # {'age': 12, 'name': 'tom'}
@@ -254,27 +266,30 @@
     D.get(key, default)                               # get函数
     D.update(D_other)                                 # 合并字典，如果存在相同的键值，D_other的数据会覆盖掉D的数据
     D.pop(key, [D])                                   # 删除字典中键值为key的项，返回键值为key的值，如果不存在，返回默认值D，否则异常
-    D.popitem()                                       # pop字典中的一项（一个键值对）
+    D.popitem()                                       # pop字典中随机的一项（一个键值对）
     D.setdefault(k[, d])                              # 设置D中某一项的默认值。如果k存在，则返回D[k]，否则设置D[k]=d，同时返回D[k]。
     del D                                             # 删除字典
     del D['key']                                      # 删除字典的某一项
     if key in D:   if key not in D:                   # 测试字典键是否存在
     # 字典注意事项：（1）对新索引赋值会添加一项（2）字典键不一定非得是字符串，也可以为任何的不可变对象
+    # 不可变对象：调用对象自身的任意方法，也不会改变该对象自身的内容，这些方法会创建新的对象并返回。
+    # 字符串、整数、tuple都是不可变对象，dict、set、list都是可变对象
+    D[(1,2,3)] = 2                                    # tuple作为字典的key
 
 #-- 字典解析
-    D = {k:8 for k in ['s', 'd']}                     # {'d': 8, 's': 8}
-    D = {k:v for (k, v) in zip(['name', 'age'], ['tom', 12])}
+    D = {k:8 for k in ['s', 'd']}                     # {'s': 8, 'd': 8}
+    D = {k:v for (k, v) in zip(['name', 'age'], ['tom', 12])}       # {'age': 12, 'name': tom}
     
 #-- 字典的特殊方法__missing__：当查找找不到key时，会执行该方法
     class Dict(dict):
         def __missing__(self, key):
             self[key] = []
             return self[key]
-    dct = Dict()
+    dct = dict()
     dct["foo"].append(1)    # 这有点类似于collections.defalutdict
     dct["foo"]              # [1]
     
-#-- 元组和列表的唯一区别在于元组是不可变对象，列表时可变对象
+#-- 元组和列表的唯一区别在于元组是不可变对象，列表是可变对象
     a = [1, 2, 3]           # a[1] = 0, OK
     a = (1, 2, 3)           # a[1] = 0, Error
     a = ([1, 2])            # a[0][1] = 0, OK
@@ -300,7 +315,7 @@
     fp.isatty()                             # 文件是否是一个终端设备文件（unix系统中的）
     fp.tell()                               # 返回文件操作标记的当前位置，以文件的开头为原点
     fp.next()                               # 返回下一行，并将文件操作标记位移到下一行。把一个file用于for … in file这样的语句时，就是调用next()函数来实现遍历的。
-    fp.seek(offset[,whence])                # 将文件打操作标记移到offset的位置。whence可以为0表示从头开始计算，1表示以当前位置为原点计算。2表示以文件末尾为原点进行计算。
+    fp.seek(offset[,whence])                # 将文件打开操作标记移到offset的位置。whence为0表示从头开始计算，1表示以当前位置为原点计算。2表示以文件末尾为原点进行计算。
     fp.seekable()                           # 是否可以seek
     fp.truncate([size])                     # 把文件裁成规定的大小，默认的是裁到当前文件操作标记的位置。
     for line in open('data'): 
@@ -327,8 +342,8 @@
 
 #-- 序列赋值 序列解包
     [a, b, c] = (1, 2, 3)                  # a = 1, b = 2, c = 3
-    a, b, c, d = "spam"                    # a = 's', b = 'p'
-    a, b, c = range(3)                     # a = 0, b = 1
+    a, b, c, d = "spam"                    # a = 's', b = 'p', c = 'a', d = 'm'
+    a, b, c = range(3)                     # a = 0, b = 1, c = 2
     a, *b = [1, 2, 3, 4]                   # a = 1, b = [2, 3, 4]
     *a, b = [1, 2, 3, 4]                   # a = [1, 2, 3], b = 4
     a, *b, c = [1, 2, 3, 4]                # a = 1, b = [2, 3], c = 4
@@ -353,7 +368,8 @@
     A = 1 if X else 2
     A = 1 if X else (2 if Y else 3)
     # 也可以使用and-or语句（一条语句实现多个if-else）
-    result = (a > 20 and "big than 20" or a > 10 and "big than 10" or a > 5 and "big than 5")
+    a = 6
+    result = (a > 20 and "big than 20" or a > 10 and "big than 10" or a > 5 and "big than 5")    # 返回"big than 20"
 
 #-- Python的while语句或者for语句可以带else语句 当然也可以带continue/break/pass语句
     while a > 1:
@@ -401,7 +417,7 @@
         function document
         """
         print()
-    class Employee:
+    class Employee(object):
         """
         class document
         """
@@ -656,7 +672,8 @@
 
     """IO操作"""
     file(filename [, mode [, bufsize]]) # file类型的构造函数。
-    input([prompt])                     # 获取用户输入，推荐使用raw_input，因为该函数将不会捕获用户的错误输入
+    input([prompt])                     # 获取用户输入，推荐使用raw_input，因为该函数将不会捕获用户的错误输入，意思是自行判断类型
+    # 在 Built-in Functions 里有一句话是这样写的：Consider using the raw_input() function for general input from users.
     raw_input([prompt])                 # 设置输入，输入都是作为字符串处理
     open(name[, mode[, buffering]])     # 打开文件，与file有什么不同？推荐使用open
     
@@ -695,7 +712,7 @@
     repr(object)                        # 将一个对象变幻为可打印的格式
     slice(start, stop[, step])          # 产生分片对象
     type(object)                        # 返回该object的类型
-    vars([object])                      # 返回对象的变量名、变量值得字典
+    vars([object])                      # 返回对象的变量名、变量值的字典
         a = Class();                    # Class为一个空类
         a.name = 'qi', a.age = 9
         vars(a)                         # {'name':'qi', 'age':9}
@@ -717,11 +734,20 @@
 #-- 查看全部的模块搜索路径
     import sys
     sys.path
-        
+    sys.argv                            # 获得脚本的参数
+    sys.builtin_module_names            # 查找内建模块
+    sys.platform                        # 返回当前平台 出现如： "win32" "linux" "darwin"等
+    sys.modules                         # 查找已导入的模块
+    sys.modules.keys()
+    sys.stdout                          # stdout 和 stderr 都是类文件对象，但是它们都是只写的。它们都没有 read 方法，只有 write 方法
+    sys.stdout.write("hello")
+    sys.stderr
+    sys.stdin   
+
 #-- 模块的使用代码
     import module1, module2             # 导入module1 使用module1.printer()
     from module1 import printer         # 导入module1中的printer变量 使用printer()
-    from module1 imoprt *               # 导入module1中的全部变量 使用不必添加module1前缀
+    from module1 import *               # 导入module1中的全部变量 使用不必添加module1前缀
 
 #-- 重载模块reload: 这是一个内置函数 而不是一条语句
     from imp import reload
@@ -739,8 +765,8 @@
     """
     
 #-- 包相对导入:使用点号(.) 只能使用from语句
-    from . import spam                  # 导入当前目录下的spam模块（错误: 当前目录下的模块, 直接导入即可）
-    from .spam import name              # 导入当前目录下的spam模块的name属性（错误: 当前目录下的模块, 直接导入即可，不用加.）
+    from . import spam                  # 导入当前目录下的spam模块（Python2: 当前目录下的模块, 直接导入即可）
+    from .spam import name              # 导入当前目录下的spam模块的name属性（Python2: 当前目录下的模块, 直接导入即可，不用加.）
     from .. import spam                 # 导入当前目录的父目录下的spam模块
     
 #-- 包相对导入与普通导入的区别
@@ -783,7 +809,7 @@
     I1 = C1('bob')
     
 #-- Python的类没有基于参数的函数重载
-    class FirstClass:
+    class FirstClass(object):
         def test(self, string):
             print(string)
         def test(self):                 # 此时类中只有一个test函数 即后者test(self) 它覆盖掉前者带参数的test函数
@@ -804,7 +830,7 @@
 #-- 返回1中 数据属性spam是属于类 而不是对象
     I1 = C1('bob'); I2 = C2('tom')      # 此时I1和I2的spam都为42 但是都是返回的C1的spam属性
     C1.spam = 24                        # 此时I1和I2的spam都为24
-    I1.spam = 3                         # 此时I1新增自有属性spam 值为2 I2和C1的spam还都为24
+    I1.spam = 3                         # 此时I1新增自有属性spam 值为3 I2和C1的spam还都为24
     
 #-- 类方法调用的两种方式
     instance.method(arg...)
@@ -833,7 +859,7 @@
     pass
     # OOP和委托: "包装"对象 在Python中委托通常是以"__getattr__"钩子方法实现的, 这个方法会拦截对不存在属性的读取
     # 包装类(或者称为代理类)可以使用__getattr__把任意读取转发给被包装的对象
-    class wrapper:
+    class wrapper(object):
         def __init__(self, object):
             self.wrapped = object
         def __getattr(self, attrname):
@@ -846,7 +872,7 @@
     list(x.keys())                      # 返回 "Trace: keys" ['a', 'b']
 
 #-- 类的伪私有属性:使用__attr
-    class C1:
+    class C1(object):
         def __init__(self, name):
             self.__name = name          # 此时类的__name属性为伪私有属性 原理 它会自动变成self._C1__name = name
         def __str__(self):
@@ -857,7 +883,7 @@
     I._C1__name = 'jeey'                # 这里可以修改成功 self.name = jeey
     
 #-- 类方法是对象:无绑定类方法对象 / 绑定实例方法对象
-    class Spam:
+    class Spam(object):
         def doit(self, message):
             print(message)
         def selfless(message)
@@ -867,7 +893,7 @@
     x('hello world')
     x = Spam.doit                       # 类的无绑定方法对象 类名 + 函数
     x(obj, 'hello world')
-    x = Spam.selfless                   # 类的无绑定方法是函数 在3.0之前无效
+    x = Spam.selfless                   # 类的无绑定方法函数 在3.0之前无效
     x('hello world')
 
 #-- 获取对象信息: 属性和方法
@@ -921,7 +947,7 @@
     fooChild.bar('HelloWorld')
     
 #-- #实例方法 / 静态方法 / 类方法
-    class Methods:
+    class Methods(object):
         def imeth(self, x): print(self, x)      # 实例方法：传入的是实例和数据，操作的是实例的属性
         def smeth(x): print(x)                  # 静态方法：只传入数据 不传入实例，操作的是类的属性而不是实例的属性
         def cmeth(cls, x): print(cls, x)        # 类方法：传入的是类对象和数据
@@ -951,13 +977,13 @@
 #-- 类修饰器:是它后边的类的运行时的声明 由@符号以及后边紧跟的"元函数"(metafunction)组成
         def decorator(aClass):.....
         @decorator
-        class C:....
+        class C(object):....
     # 等同于:
-        class C:....
+        class C(object):....
         C = decorator(C)
 
 #-- 限制class属性: __slots__属性
-    class Student:
+    class Student(object):
         __slots__ = ('name', 'age')             # 限制Student及其实例只能拥有name和age属性
     # __slots__属性只对当前类起作用, 对其子类不起作用
     # __slots__属性能够节省内存
@@ -1058,8 +1084,7 @@
     # 动态类型语言中 类可以动态创建 type函数可用于创建新类型
         def fn(self, name='world'):           # 先定义函数
             print('Hello, %s.' % name)
-        Hello = type('Hello', (object,), dict(hello=fn)) 
-        # 创建Hello类 type原型: type(name, bases, dict)
+        Hello = type('Hello', (object,), dict(hello=fn))    # 创建Hello类 type原型: type(name, bases, dict)
         h = Hello()                           # 此时的h和上边的h一致
 
 

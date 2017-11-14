@@ -5,9 +5,12 @@
 *.log
 *.out
 *.dat
-*.txt
 *.temp
 *.png
+*.pkl
+*.mp3
+*.mp4
+*.csv
 .*
 
 test/
