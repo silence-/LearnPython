@@ -2,7 +2,9 @@ virtualenv
 pylint
 lxml
 html5lib
+xmltodict
 pybloom_live
+fake-useragent
 beautifulsoup4
 aiohttp
 requests
@@ -22,3 +24,9 @@ Flask-Bootstrap
 Flask-SQLAlchemy
 gunicorn
 uWSGI
+numpy
+scipy
+matplotlib
+pandas
+scikit-learn
+jupyter
